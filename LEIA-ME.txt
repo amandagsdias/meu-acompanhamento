@@ -1,0 +1,30 @@
+MEU ACOMPANHAMENTO — VERSÃO INSTALÁVEL (PWA)
+
+O QUE VEM NESTA PASTA
+- index.html: aplicativo
+- manifest.webmanifest: nome, ícone e modo instalável
+- sw.js: cache básico para abrir a interface quando estiver offline
+- icons/: ícones para Android/iPhone
+
+IMPORTANTE: para instalar como aplicativo, não basta abrir index.html diretamente. Publique TODOS os arquivos desta pasta em um endereço HTTPS (por exemplo, hospedagem estática) e acesse esse endereço no celular. O navegador precisa de HTTPS para permitir a câmera e a instalação PWA, exceto em localhost para testes.
+
+ANDROID (Chrome)
+1. Abra o endereço HTTPS publicado no Chrome.
+2. Abra o menu ⋮ e escolha “Instalar app” ou “Adicionar à tela inicial”.
+3. Confirme. O ícone Meu acompanhamento aparecerá na tela inicial.
+
+IPHONE (Safari)
+1. Abra o endereço HTTPS publicado no Safari.
+2. Toque em Compartilhar.
+3. Escolha “Adicionar à Tela de Início” e confirme.
+4. Abra pelo novo ícone. Autorize a câmera quando solicitado.
+
+DADOS E BACKUP
+- Os dados continuam no armazenamento local do navegador/dispositivo; esta versão não sincroniza automaticamente entre aparelhos.
+- Use “Exportar backup” regularmente para salvar um arquivo JSON fora do celular.
+- Antes de limpar dados do navegador ou trocar de aparelho, exporte e depois importe o backup no novo dispositivo.
+- O modo offline mantém os arquivos principais do aplicativo disponíveis, mas consulta TACO, consulta de produtos por código de barras e leitor ZXing de fallback podem precisar de internet.
+- A leitura de câmera exige permissão do navegador. Alguns navegadores usam o leitor nativo; outros carregam uma biblioteca auxiliar pela internet. A digitação do código continua disponível como alternativa.
+
+PRIVACIDADE
+O backup JSON pode conter informações pessoais de acompanhamento. Guarde-o em local privado e não o publique em links abertos.

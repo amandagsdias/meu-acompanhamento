@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#087F8C">
+<meta name="description" content="Acompanhe peso, refeições, água, exercícios e aplicações em um só lugar.">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+<title>Meu acompanhamento</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#F3F6FA;--sf:#FFFFFF;--tx:#172B4D;--mut:#64748B;--pr:#087F8C;--on:#FFFFFF;--pr2:#DDF3F4;--ac:#7251A3;--ac2:#EEE7F8;--ln:#E1E8F0;--ok:#16856B;--warn:#B45309;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101820;--sf:#182530;--tx:#E6EDF5;--mut:#A0B0C0;--pr:#55C5CC;--on:#09272A;--pr2:#203D44;--ac:#C4A8EA;--ac2:#342B45;--ln:#2A3C49;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#101820;--sf:#182530;--tx:#E6EDF5;--mut:#A0B0C0;--pr:#55C5CC;--on:#09272A;--pr2:#203D44;--ac:#C4A8EA;--ac2:#342B45;--ln:#2A3C49;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:400 14px/1.55 Manrope,system-ui,sans-serif;font-variant-numeric:tabular-nums} 
+#app{animation:fadein .25s ease-out} @keyframes fadein{from{opacity:.65;transform:translateY(3px)}to{opacity:1;transform:none}}
+#app{max-width:760px;margin:0 auto;padding:22px 16px 105px}
+h1{font-size:22px;letter-spacing:-.6px;font-weight:800;margin:0}
+h2{font-size:16px;font-weight:800;margin:0 0 10px}
+header{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.dn{display:flex;align-items:center;gap:6px;font-weight:600}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 5px 18px rgba(24,48,70,.035)}
+button{font:inherit;font-size:13px;font-weight:800;border:0;border-radius:11px;padding:10px 14px;background:var(--pr);color:var(--on);cursor:pointer;transition:transform .12s,filter .12s}button:hover{filter:brightness(1.04)}button:active{transform:scale(.98)}
+button.g{background:var(--pr2);color:var(--tx)}
+.dn button{background:var(--pr2);color:var(--tx);padding:6px 12px}
+.x{background:none;color:var(--mut);font-size:19px;padding:2px 8px}
+input{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--ln);border-radius:11px;padding:11px 12px;min-width:0;width:100%;outline-offset:2px}input::placeholder{color:var(--mut);opacity:.8}
+input[type=checkbox]{width:20px;height:20px;vertical-align:middle;margin-right:8px}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--pr);outline-offset:2px}
+.row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}.row input{flex:1 1 120px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+.it{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--ln)}
+.mut,small{color:var(--mut)}
+.big{font-size:32px;letter-spacing:-1px;font-weight:800;margin:0 0 8px}.big small{font-size:13px;font-weight:600;letter-spacing:0}
+.bar{height:8px;border-radius:6px;background:var(--pr2);overflow:hidden}.bar i{display:block;height:100%;background:var(--pr)}
+.m{margin-bottom:10px}.ml{display:flex;justify-content:space-between;margin-bottom:4px}
+.ac .bar{background:var(--ac2)}.ac button{background:var(--ac);color:var(--bg)}
+.nx{font-size:22px;font-weight:800;margin:0}
+details{margin-top:8px}summary{cursor:pointer;color:var(--mut);font-weight:600}
+label.f{display:block;font-size:13px;color:var(--mut);margin-top:8px}
+svg{width:100%;height:auto;display:block;margin-bottom:6px}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:6px 4px;text-align:left;border-top:1px solid var(--ln)}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;gap:8px;justify-content:center;padding:11px 14px calc(11px + env(safe-area-inset-bottom,0px));background:var(--sf);border-top:1px solid var(--ln);box-shadow:0 -5px 24px rgba(24,48,70,.06);z-index:5}
+nav button{flex:1;max-width:220px;background:transparent;color:var(--mut);border:1px solid var(--ln)}nav button.on{background:var(--pr);color:var(--on);border-color:var(--pr)}
+.hero{background:linear-gradient(135deg,var(--pr2),var(--sf) 78%);border-radius:20px;padding:20px;margin-bottom:14px;border:1px solid var(--ln)}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--mut);font-weight:800}.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat{background:var(--bg);border-radius:13px;padding:12px}.stat b{display:block;font-size:20px;letter-spacing:-.5px}.stat span{font-size:11px;color:var(--mut)}.hint{font-size:12px;color:var(--mut);margin:8px 0 0}.pill{display:inline-block;padding:4px 8px;border-radius:99px;background:var(--pr2);font-size:11px;font-weight:800;color:var(--tx)}.symptoms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.symptoms label{margin:0;background:var(--bg);border-radius:10px;padding:9px;font-size:13px;color:var(--tx)}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions button{flex:1 1 130px}@media(min-width:620px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.symptoms{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:420px){#app{padding:14px 10px 100px}.card{padding:14px;border-radius:15px}h1{font-size:19px}.big{font-size:28px}.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.row{gap:6px}.row button{flex:1}}
+.meal-block{border:1px solid var(--ln);border-radius:13px;padding:11px;margin:10px 0;background:color-mix(in srgb,var(--bg) 45%,var(--sf))}.meal-heading{display:flex;align-items:center;justify-content:space-between;gap:8px}.meal-heading h3{font-size:14px;margin:0;font-weight:800}.meal-heading span{font-weight:800;color:var(--pr)}.meal-total{font-size:12px;color:var(--mut);margin:8px 0 0;padding-top:8px;border-top:1px solid var(--ln)}
+.food-tools{display:grid;grid-template-columns:1fr;gap:8px}.food-table-wrap{overflow:auto;border:1px solid var(--ln);border-radius:12px;margin-top:12px}table.food-table{min-width:650px;font-size:12px}table.food-table th{position:sticky;top:0;background:var(--bg);z-index:1;color:var(--mut);font-size:11px}table.food-table td,table.food-table th{padding:9px 8px;white-space:nowrap}table.food-table tr:nth-child(even){background:color-mix(in srgb,var(--bg) 60%,var(--sf))}.food-name{white-space:normal!important;min-width:210px;max-width:300px}.nutri-detail{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.nutri-detail div{background:var(--bg);padding:9px;border-radius:10px}.nutri-detail b{display:block;font-size:14px}.nutri-detail span{font-size:11px;color:var(--mut)}.source-note{font-size:11px;color:var(--mut);line-height:1.5}@media(min-width:620px){.food-tools{grid-template-columns:2fr 1fr}.nutri-detail{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.taco-inline{margin-top:10px;padding:12px;border-radius:12px;background:var(--sf);border:1px solid var(--ln)}.taco-results{display:grid;gap:6px;max-height:270px;overflow:auto;margin-top:8px}.taco-result{display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;background:var(--bg);color:var(--tx);border:1px solid var(--ln);padding:9px 10px}.taco-result small{font-size:11px;color:var(--mut)}.taco-result.chosen{border-color:var(--pr);background:var(--pr2)}.taco-selected{margin-top:12px;padding-top:12px;border-top:1px solid var(--ln)}.taco-selected h3{font-size:14px;margin:0 0 8px}.barcode-tools{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--ln)}.barcode-video{width:100%;max-height:260px;object-fit:cover;border-radius:12px;background:#111;margin-top:8px}.barcode-status{font-size:12px;color:var(--mut);margin:6px 0}.barcode-product{border:1px solid var(--ln);padding:10px;border-radius:12px;margin-top:10px}.fav-tools{margin-top:10px;padding:9px 10px;border:1px solid var(--ln);border-radius:10px}.fav-list{display:grid;gap:6px;margin-top:8px}.fav-item{display:flex;align-items:center;gap:6px}.fav-item button:first-child{flex:1;text-align:left;background:var(--bg);color:var(--tx);border:1px solid var(--ln);font-weight:600}.tiny-action{padding:6px 8px;font-size:11px}.save-status{font-size:11px;color:var(--mut);margin-top:8px}
+</style>
+</head>
+<body>
+<div id="app">Carregando…</div>
+<nav id="nav"></nav>
+<script>
+const LS='ozivy-app-v1';
+let S,cur,tab='hoje',dbRef=null,tm;
+let tacoFoods=[],tacoStatus='idle',selectedTaco=null,tacoMealActive='',tacoSearchQuery='';
+let barcodeScannerOpen=false,barcodeStream=null,barcodeFrame=0,barcodeBusy=false,barcodeStatus='',barcodeProduct=null,barcodeMeal='cafe';
+const TACO_URL='https://raw.githubusercontent.com/brolesi/taco/main/data/processed/taco/taco_composicao.csv';
+const MEALS=[['cafe','Café da manhã'],['almoco','Almoço'],['lanche','Café da tarde'],['jantar','Jantar']];
+const mealName=k=>(MEALS.find(x=>x[0]===k)||['outro','Outra refeição'])[1];
+const TACO_FIELDS=[
+ ['energia_kcal','Energia','kcal'],['energia_kj','Energia','kJ'],['proteina_g','Proteína','g'],
+ ['lipideos_g','Lipídeos totais','g'],['carboidrato_g','Carboidratos','g'],['fibra_g','Fibra alimentar','g'],
+ ['colesterol_mg','Colesterol','mg'],['umidade_pct','Umidade','g'],['cinzas_g','Cinzas','g'],
+ ['calcio_mg','Cálcio','mg'],['magnesio_mg','Magnésio','mg'],['manganes_mg','Manganês','mg'],
+ ['fosforo_mg','Fósforo','mg'],['ferro_mg','Ferro','mg'],['sodio_mg','Sódio','mg'],
+ ['potassio_mg','Potássio','mg'],['cobre_mg','Cobre','mg'],['zinco_mg','Zinco','mg'],
+ ['retinol_mcg','Retinol','µg'],['RE_mcg','Equivalente de retinol (RE)','µg'],['RAE_mcg','Atividade de retinol (RAE)','µg'],
+ ['tiamina_mg','Vitamina B1','mg'],['riboflavina_mg','Vitamina B2','mg'],['piridoxina_mg','Vitamina B6','mg'],
+ ['niacina_mg','Vitamina B3','mg'],['vitamina_c_mg','Vitamina C','mg']
+];
+function parseCSV(text){
+ const rows=[];let row=[],field='',quoted=false;
+ for(let i=0;i<text.length;i++){const c=text[i];
+  if(quoted){if(c==='"'&&text[i+1]==='"'){field+='"';i++}else if(c==='"')quoted=false;else field+=c}
+  else if(c==='"')quoted=true;
+  else if(c===','){row.push(field);field=''}
+  else if(c==='\n'){row.push(field.replace(/\r$/,''));rows.push(row);row=[];field=''}
+  else field+=c;
+ }
+ if(field.length||row.length){row.push(field.replace(/\r$/,''));rows.push(row)}
+ const headers=rows.shift()||[];
+ return rows.filter(r=>r.length>1).map(r=>Object.fromEntries(headers.map((h,i)=>[h,(r[i]??'').trim()])));
+}
+async function loadTaco(){
+ if(tacoStatus==='loading'||tacoStatus==='loaded')return;
+ tacoStatus='loading';
+ try{
+  const res=await fetch(TACO_URL,{cache:'force-cache'});
+  if(!res.ok)throw new Error('HTTP '+res.status);
+  tacoFoods=parseCSV(await res.text());
+  if(!tacoFoods.length)throw new Error('Tabela vazia');
+  tacoStatus='loaded';
+ }catch(e){tacoStatus='error'}
+ if(tab==='alimentos'||tab==='hoje')render();
+}
+const tacoNum=v=>{if(v===undefined||v===null||v===''||v==='NA'||v==='—')return null;const n=Number(v);return Number.isFinite(n)?n:null};
+const tacoFmt=(v,d=1)=>{if(v===undefined||v===null||v===''||v==='NA')return'—';const n=Number(v);if(!Number.isFinite(n))return String(v);if(n>0&&n<0.0001)return'Tr';return n.toLocaleString('pt-BR',{maximumFractionDigits:d})};
+const per100=(food,key,grams)=>{const v=tacoNum(food[key]);return v===null?null:v*grams/100};
+function vAlimentos(){
+ if(tacoStatus==='idle'){loadTaco();return `<section class="card"><h2>Banco de alimentos TACO</h2><p>Carregando a tabela nutricional...</p><p class="hint">Na primeira utilização, é necessária conexão com a internet para carregar os 597 alimentos.</p></section>`}
+ if(tacoStatus==='loading')return `<section class="card"><h2>Banco de alimentos TACO</h2><p>Carregando a tabela nutricional...</p></section>`;
+ if(tacoStatus==='error')return `<section class="card"><h2>Banco de alimentos TACO</h2><p>Não foi possível carregar a base automaticamente.</p><p class="hint">Verifique sua conexão e reabra esta aba. A base consultada é a TACO 4ª edição, NEPA/UNICAMP, 2011.</p><button data-a="retrytaco">Tentar novamente</button></section>`;
+ const q=(document.getElementById('tacoSearch')?.value||'').trim().toLocaleLowerCase('pt-BR');
+ const cat=document.getElementById('tacoCategory')?.value||'';
+ const filtered=tacoFoods.map((f,i)=>({...f,_idx:i})).filter(f=>(!q||f.descricao.toLocaleLowerCase('pt-BR').includes(q))&&(!cat||f.categoria===cat));
+ const cats=[...new Set(tacoFoods.map(f=>f.categoria).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+ const selected=selectedTaco!==null?tacoFoods[selectedTaco]:null;
+ const rows=filtered.slice(0,100).map(f=>`<tr><td class="food-name">${esc(f.descricao)}</td><td>${tacoFmt(f.energia_kcal)}</td><td>${tacoFmt(f.proteina_g)}</td><td>${tacoFmt(f.carboidrato_g)}</td><td>${tacoFmt(f.lipideos_g)}</td><td>${tacoFmt(f.fibra_g)}</td><td><button data-a="selecttaco" data-i="${f._idx}">Ver / adicionar</button></td></tr>`).join('');
+ const detail=selected?`<section class="card"><h2>${esc(selected.descricao)}</h2><p class="hint">Valores calculados proporcionalmente à quantidade informada. Base da tabela: por 100 g da parte comestível.</p><div class="row"><label class="f" style="flex:1">Refeição<select id="tacoMeal">${MEALS.map(([k,n])=>`<option value="${k}">${n}</option>`).join('')}</select></label><label class="f" style="flex:1">Quantidade em gramas<input id="tacoGrams" type="number" min="0.1" step="any" value="100"></label></div><div class="nutri-detail">${TACO_FIELDS.map(([k,n,u])=>`<div><span>${n} (${u})</span><b data-taco-value="${k}">${tacoFmt(per100(selected,k,100))}</b><span>para 100 g</span></div>`).join('')}</div><div class="row"><button data-a="addtaco">Adicionar ao diário de ${dm(cur)}</button></div><p class="source-note">“Tr” significa traço (valor muito pequeno); “—” indica dado não informado/analisado na fonte, não necessariamente zero.</p></section>`:'';
+ return `<section class="card"><h2>Banco de alimentos TACO</h2><p class="hint">Pesquise e escolha um alimento para consultar a composição nutricional e adicioná-lo ao diário. A base reúne ${tacoFoods.length} alimentos.</p><div class="food-tools"><input id="tacoSearch" placeholder="Buscar: arroz, banana, frango..." value="${esc(document.getElementById('tacoSearch')?.value||'')}"><select id="tacoCategory"><option value="">Todas as categorias</option>${cats.map(c=>`<option value="${esc(c)}" ${cat===c?'selected':''}>${esc(c)}</option>`).join('')}</select></div><p class="hint">Mostrando ${Math.min(filtered.length,100)} de ${filtered.length} resultados${filtered.length>100?' — refine a busca para ver opções mais específicas.':''}.</p><div class="food-table-wrap"><table class="food-table"><thead><tr><th>Alimento (preparo conforme TACO)</th><th>kcal</th><th>Proteína (g)</th><th>Carboidrato (g)</th><th>Lipídeos (g)</th><th>Fibra (g)</th><th>Ação</th></tr></thead><tbody>${rows||'<tr><td colspan="7">Nenhum alimento encontrado.</td></tr>'}</tbody></table></div><p class="source-note">Fonte: Tabela Brasileira de Composição de Alimentos (TACO), 4ª edição revisada e ampliada, NEPA/UNICAMP, 2011. Valores por 100 g. Os nutrientes apresentados dependem dos campos disponíveis na base; “—” significa dado não informado. A consulta online exige internet.</p></section>${detail}`;
+}
+function vTacoInline(meal){
+ if(tacoStatus==='idle'){loadTaco();return `<div class="taco-inline"><p class="hint">Carregando a tabela TACO...</p></div>`}
+ if(tacoStatus==='loading')return `<div class="taco-inline"><p class="hint">Carregando alimentos da TACO...</p></div>`;
+ if(tacoStatus==='error')return `<div class="taco-inline"><p class="hint">Não foi possível carregar a tabela TACO. Confira a internet e tente novamente.</p><button class="g" data-a="retrytaco">Tentar novamente</button></div>`;
+ const q=tacoSearchQuery.trim().toLocaleLowerCase('pt-BR');
+ const results=tacoFoods.map((f,i)=>({...f,_idx:i})).filter(f=>!q||f.descricao.toLocaleLowerCase('pt-BR').includes(q)).slice(0,20);
+ const selected=selectedTaco!==null?tacoFoods[selectedTaco]:null;
+ return `<div class="taco-inline"><label class="f">Pesquisar alimento na TACO<input id="tacoSearch" placeholder="Digite: arroz, banana, frango..." value="${esc(tacoSearchQuery)}"></label>
+ <div class="barcode-tools"><h3 style="font-size:14px;margin:0">Ou escaneie um produto embalado</h3><p class="hint" style="margin:0">Consulta a base Open Food Facts. Confira os valores da embalagem antes de registrar.</p><div class="row"><button class="g" data-a="startscanner">📷 Abrir câmera e escanear</button></div>${barcodeScannerOpen?`<video id="barcodeVideo" class="barcode-video" autoplay muted playsinline></video><p class="barcode-status">${esc(barcodeStatus||'Aponte a câmera para o código de barras.')}</p><button class="g" data-a="stopscanner">Fechar câmera</button>`:''}<div class="row"><input id="barcodeInput" inputmode="numeric" placeholder="Ou digite o código de barras" value=""><button data-a="lookupbarcode">Buscar código</button></div>${barcodeStatus&&!barcodeScannerOpen?`<p class="barcode-status">${esc(barcodeStatus)}</p>`:''}${barcodeProduct?`<div class="barcode-product"><b>${esc(barcodeProduct.name||'Produto sem nome')}</b><p class="hint">${esc(barcodeProduct.brand||'Marca não informada')} · por 100 g/ml: ${barcodeProduct.kcal==null?'kcal não informadas':tacoFmt(barcodeProduct.kcal)+' kcal'} · P ${barcodeProduct.p==null?'—':tacoFmt(barcodeProduct.p)+' g'} · C ${barcodeProduct.c==null?'—':tacoFmt(barcodeProduct.c)+' g'} · G ${barcodeProduct.fat==null?'—':tacoFmt(barcodeProduct.fat)+' g'}</p><div class="row"><label class="f" style="flex:1">Quantidade (g ou ml)<input id="barcodeGrams" type="number" min="0.1" step="any" value="100"></label><button data-a="addbarcode">Adicionar ao ${mealName(meal)}</button></div><p class="source-note">Dados colaborativos; podem estar incompletos ou incorretos. Confira o rótulo.</p></div>`:''}</div>
+ <p class="hint">Escolha um resultado da TACO para ver nutrientes por porção. Exibindo até 20 resultados.</p>
+ <div class="taco-results">${results.map(f=>`<button class="taco-result ${selectedTaco===f._idx?'chosen':''}" data-a="selecttaco" data-i="${f._idx}"><span>${esc(f.descricao)}</span><small>${tacoFmt(f.energia_kcal)} kcal · P ${tacoFmt(f.proteina_g)} g · C ${tacoFmt(f.carboidrato_g)} g</small></button>`).join('')||'<p class="hint">Nenhum alimento encontrado. Tente outro termo.</p>'}</div>
+ ${selected?`<div class="taco-selected"><h3>${esc(selected.descricao)}</h3><div class="row"><label class="f" style="flex:1">Quantidade (g)<input id="tacoGrams" type="number" min="0.1" step="any" value="100"></label></div><div class="nutri-detail">${TACO_FIELDS.map(([k,n,u])=>`<div><span>${n} (${u})</span><b data-taco-value="${k}">${tacoFmt(per100(selected,k,100))}</b><span class="nutri-grams">para 100 g</span></div>`).join('')}</div><div class="row"><button data-a="addtaco">Adicionar ao ${mealName(meal)}</button></div><p class="source-note">Valores proporcionais à porção, com base na TACO 4ª edição. “—” indica dado não informado.</p></div>`:''}
+ </div>`;
+}
+function stopBarcodeScanner(){
+ if(barcodeFrame)cancelAnimationFrame(barcodeFrame);barcodeFrame=0;
+ try{window.__ozivyZXingControls?.stop();window.__ozivyZXingControls=null;}catch(e){}
+ if(barcodeStream){barcodeStream.getTracks().forEach(t=>t.stop());barcodeStream=null;}
+ barcodeScannerOpen=false;
+}
+async function startBarcodeScanner(){
+ barcodeStatus='';
+ if(!navigator.mediaDevices?.getUserMedia){barcodeStatus='A câmera não está disponível neste navegador/contexto. Digite o código manualmente.';render();return;}
+ try{
+  barcodeStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
+  const video=document.getElementById('barcodeVideo');if(!video)throw new Error('Área da câmera não encontrada');
+  video.srcObject=barcodeStream;await video.play();barcodeStatus='Aponte a câmera para o código de barras.';
+  const statusEl=document.querySelector('.barcode-status');if(statusEl)statusEl.textContent=barcodeStatus;
+  const v=document.getElementById('barcodeVideo');if(!v)throw new Error('Área da câmera não encontrada');
+  if('BarcodeDetector' in window){
+   const detector=new BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e','code_128','itf']});
+   const scan=async()=>{if(!barcodeScannerOpen||!barcodeStream)return;const videoNow=document.getElementById('barcodeVideo');if(videoNow&&videoNow.readyState>=2&&!barcodeBusy){try{const codes=await detector.detect(videoNow);if(codes.length&&codes[0].rawValue){barcodeBusy=true;const code=codes[0].rawValue;stopBarcodeScanner();barcodeStatus='Código lido: '+code;render();await lookupBarcode(code);barcodeBusy=false;return;}}catch(err){}}barcodeFrame=requestAnimationFrame(scan);};
+   barcodeFrame=requestAnimationFrame(scan);
+  }else{
+   // Fallback para navegadores sem BarcodeDetector (por exemplo, alguns iPhones).
+   if(!window.ZXingBrowser){await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@zxing/browser@0.1.5/umd/index.min.js';s.onload=resolve;s.onerror=()=>reject(new Error('Não foi possível carregar o leitor de código de barras'));document.head.appendChild(s);});}
+   if(!window.ZXingBrowser?.BrowserMultiFormatReader)throw new Error('Leitor de código indisponível');
+   const reader=new window.ZXingBrowser.BrowserMultiFormatReader();
+   window.__ozivyZXingControls=await reader.decodeFromVideoElement(v,(result,error)=>{if(result&&barcodeScannerOpen&&!barcodeBusy){barcodeBusy=true;const code=result.getText();stopBarcodeScanner();barcodeStatus='Código lido: '+code;render();lookupBarcode(code).finally(()=>{barcodeBusy=false;});}});
+  }
+ }catch(err){stopBarcodeScanner();barcodeStatus='Não foi possível iniciar a leitura. Autorize a câmera, confira a conexão e tente novamente ou digite o código manualmente.';render();}
+}
+async function lookupBarcode(code){
+ code=String(code||'').replace(/\D/g,'');if(!code){barcodeStatus='Digite um código de barras válido.';render();return;}
+ barcodeStatus='Buscando produto...';barcodeProduct=null;render();
+ try{
+  const res=await fetch('https://world.openfoodfacts.org/api/v3/product/'+encodeURIComponent(code)+'.json?fields=code,product_name,product_name_pt,brands,nutriments,quantity');
+  if(!res.ok)throw new Error('HTTP '+res.status);const data=await res.json();const p=data.product;
+  if(data.status!==1||!p){barcodeStatus='Produto não encontrado na base. Confira o código ou registre manualmente.';render();return;}
+  const n=p.nutriments||{};const pick=(...keys)=>{for(const k of keys){const v=n[k];if(v!==undefined&&v!==null&&v!==''&&Number.isFinite(Number(v)))return Number(v)}return null;};
+  barcodeProduct={code,name:p.product_name_pt||p.product_name||'Produto sem nome',brand:p.brands||'',quantity:p.quantity||'',kcal:pick('energy-kcal_100g'),p:pick('proteins_100g'),c:pick('carbohydrates_100g'),fat:pick('fat_100g'),fiber:pick('fiber_100g')};
+  barcodeStatus=barcodeProduct.kcal===null&&barcodeProduct.p===null&&barcodeProduct.c===null&&barcodeProduct.fat===null?'Produto encontrado, mas sem dados nutricionais suficientes. Confira o rótulo.':'Produto encontrado. Confira os nutrientes e a porção.';render();
+ }catch(err){barcodeStatus='Falha ao consultar a base. Verifique a internet ou digite os dados manualmente.';render();}
+}
+const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const today=()=>key(new Date());
+const add=(k,n)=>{const d=new Date(k+'T12:00');d.setDate(d.getDate()+n);return key(d)};
+const dm=k=>k.slice(8)+'/'+k.slice(5,7);
+const wd=k=>['dom','seg','ter','qua','qui','sex','sáb'][new Date(k+'T12:00').getDay()];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const num=v=>{v=parseFloat(String(v).replace(',','.'));return isNaN(v)?0:v};
+const r1=v=>Math.round(v*10)/10;
+const f2=v=>(Math.round(v*100)/100).toString().replace('.',',');
+const val=id=>document.getElementById(id).value.trim();
+const day=k=>S.days[k]||(S.days[k]={water:0,food:[],ex:[],meds:{},symptoms:{},notes:''});
+function seed(){return{weights:[{d:'2026-10-05',kg:86.3},{d:'2026-10-13',kg:84.35},{d:'2026-10-21',kg:84.8},{d:'2026-10-22',kg:84.55}],meas:[],doses:[{d:'2026-10-12',c:18,mg:0.25},{d:'2026-10-19',c:18,mg:0.25}],meds:[],days:{},goals:{}}}
+async function load(){
+  try{
+    if(window.claude&&claude.use){
+      const u=await claude.use('user'),db=await claude.use('db');
+      const uid=u?await u.id():null;
+      if(db&&uid){dbRef=db.doc('data/users/'+uid+'/state');const s=await dbRef.get();if(s.exists)return JSON.parse(s.data().json)}
+    }
+  }catch(e){}
+  try{const t=localStorage.getItem(LS);if(t)return JSON.parse(t)}catch(e){}
+  return null;
+}
+function save(){
+  try{localStorage.setItem(LS,JSON.stringify(S));localStorage.setItem(LS+'-savedAt',new Date().toISOString())}catch(e){console.warn('Não foi possível salvar no armazenamento local.',e)}
+  clearTimeout(tm);
+  tm=setTimeout(async()=>{try{if(dbRef)await dbRef.set({json:JSON.stringify(S)})}catch(e){}},500);
+}
+const bar=(l,v,g,u)=>`<div class="m"><div class="ml"><span>${l}</span><b>${r1(v)}${g?' / '+g:''} ${u}</b></div><div class="bar"><i style="width:${g?Math.min(100,v/g*100):0}%"></i></div></div>`;
+const gi=(k,l)=>`<label class="f">${l}<input data-goal="${k}" type="number" inputmode="decimal" value="${S.goals[k]||''}"></label>`;
+function favoriteButtons(meal){
+ const favs=Array.isArray(S.favorites)?S.favorites:[];
+ return `<details class="fav-tools"><summary>Favoritos rápidos (${favs.length})</summary>${favs.length?`<div class="fav-list">${favs.map((f,i)=>`<div class="fav-item"><button data-a="addfavorite" data-i="${i}" data-v="${meal}">${esc(f.n)} <small>· ${r1(f.k||0)} kcal${f.grams?' · '+f.grams+' g':''}</small></button><button class="x tiny-action" data-a="unfavorite" data-i="${i}" title="Remover dos favoritos" aria-label="Remover ${esc(f.n)} dos favoritos">×</button></div>`).join('')}</div>`:'<p class="hint">Toque em ☆ ao lado de um alimento registrado para salvá-lo aqui.</p>'}</details>`;
+}
+function vHoje(){
+  const d=day(cur),G=S.goals;
+  const t=d.food.reduce((a,f)=>({k:a.k+(f.k||0),p:a.p+(f.p||0),c:a.c+(f.c||0),g:a.g+(f.g||0),fiber:a.fiber+(f.fiber||0)}),{k:0,p:0,c:0,g:0,fiber:0});
+  const first=S.weights[0],last=S.weights[S.weights.length-1],lost=first&&last?first.kg-last.kg:0;
+  const intro=`<section class="hero"><div class="eyebrow">Seu progresso, um dia de cada vez</div><h2 style="font-size:19px;margin:6px 0 12px">Olá! Vamos cuidar da sua evolução.</h2><div class="stats"><div class="stat"><span>Peso atual registrado</span><b>${last?f2(last.kg)+' kg':'—'}</b></div><div class="stat"><span>Variação desde o início</span><b>${first&&last?(lost>=0?'−':'+')+f2(Math.abs(lost))+' kg':'—'}</b><span>${first&&last&&first.kg?f2((lost/first.kg)*100)+'% do peso inicial':''}</span></div><div class="stat"><span>Água hoje</span><b>${d.water} <small>ml</small></b></div><div class="stat"><span>Refeições</span><b>${d.food.length}</b></div></div><p class="hint">Registros de ${dm(cur)} · pequenas variações diárias são normais.</p></section>`;
+  return intro+`<section class="card"><h2>Resumo nutricional</h2>${bar('Calorias',t.k,G.kcal,'kcal')}${bar('Proteína',t.p,G.prot,'g')}${bar('Carboidrato',t.c,G.carb,'g')}${bar('Gordura',t.g,G.fat,'g')}${bar('Fibra alimentar',t.fiber,G.fiber,'g')}
+<details><summary>Ajustar metas</summary>${gi('water','Água (ml)')}${gi('kcal','Calorias (kcal)')}${gi('prot','Proteína (g)')}${gi('carb','Carboidrato (g)')}${gi('fat','Gordura (g)')}${gi('fiber','Fibra alimentar (g)')}</details></section>
+<section class="card"><h2>Hidratação</h2><p class="big">${d.water} <small>/ ${G.water} ml</small></p><div class="bar"><i style="width:${Math.min(100,d.water/G.water*100)}%"></i></div>
+<div class="row"><button data-a="w" data-v="200">+200</button><button data-a="w" data-v="300">+300</button><button data-a="w" data-v="500">+500</button><button class="g" data-a="w" data-v="-200">−200</button></div></section>
+<section class="card"><h2>Refeições do dia</h2><p class="hint">Registre alimentos pela TACO, pelo código de barras ou manualmente. Salve os itens frequentes nos favoritos e repita refeições anteriores.</p>
+${MEALS.map(([mk,mn])=>{const items=d.food.map((f,i)=>({...f,_i:i})).filter(f=>(f.meal||'outro')===mk);const totals=items.reduce((a,f)=>({k:a.k+(f.k||0),p:a.p+(f.p||0),c:a.c+(f.c||0),g:a.g+(f.g||0),fiber:a.fiber+(f.fiber||0)}),{k:0,p:0,c:0,g:0,fiber:0});return `<div class="meal-block"><div class="meal-heading"><h3>${mn}</h3><span>${r1(totals.k)} kcal</span></div>${items.map(f=>`<div class="it"><span>${esc(f.n)}<br><small>${f.k==null?'—':r1(f.k)} kcal · P ${f.p==null?'—':r1(f.p)} g · C ${f.c==null?'—':r1(f.c)} g · G ${f.g==null?'—':r1(f.g)} g${f.fiber!=null?' · Fibra '+r1(f.fiber)+' g':''}${f.grams?' · '+f.grams+' g':''}</small></span><div class="row" style="margin:0;flex:0 0 auto"><button class="g tiny-action" data-a="favfood" data-i="${f._i}" aria-label="Salvar ${esc(f.n)} nos favoritos" title="Salvar nos favoritos">☆</button><button class="x" data-a="del" data-l="food" data-i="${f._i}" aria-label="Remover">×</button></div></div>`).join('')||'<p class="hint">Nenhum alimento registrado.</p>'}<p class="meal-total">Proteína ${r1(totals.p)} g · Carboidratos ${r1(totals.c)} g · Gorduras ${r1(totals.g)} g · Fibras ${r1(totals.fiber)} g</p>${favoriteButtons(mk)}<div class="row"><button class="g tiny-action" data-a="repeatmeal" data-v="${mk}">↻ Repetir ontem</button><button class="g" data-a="openTaco" data-v="${mk}">${tacoMealActive===mk?'Fechar busca de alimentos':'＋ Buscar alimento na TACO'}</button></div>${tacoMealActive===mk?vTacoInline(mk):''}</div>`}).join('')}${d.food.some(f=>!f.meal||f.meal==='outro')?`<div class="meal-block"><div class="meal-heading"><h3>Registros antigos sem refeição definida</h3><span>${r1(d.food.filter(f=>!f.meal||f.meal==='outro').reduce((a,f)=>a+(f.k||0),0))} kcal</span></div>${d.food.map((f,i)=>({...f,_i:i})).filter(f=>!f.meal||f.meal==='outro').map(f=>`<div class="it"><span>${esc(f.n)}<br><small>${r1(f.k||0)} kcal · P ${r1(f.p||0)} g · C ${r1(f.c||0)} g · G ${r1(f.g||0)} g</small></span><button class="x" data-a="del" data-l="food" data-i="${f._i}" aria-label="Remover">×</button></div>`).join('')}<p class="hint">Os registros anteriores foram preservados. Você pode adicioná-los novamente na refeição correta, se desejar.</p></div>`:''}
+<details><summary>Adicionar alimento manualmente</summary><label class="f">Refeição<select id="manualMeal">${MEALS.map(([k,n])=>`<option value="${k}" ${k===(tacoMealActive||'cafe')?'selected':''}>${n}</option>`).join('')}</select></label><div class="row"><input id="fn" placeholder="Nome do alimento"></div>
+<div class="g4"><input id="fk" placeholder="kcal" type="number" inputmode="decimal"><input id="fp" placeholder="Proteína (g)" type="number" inputmode="decimal"><input id="fc" placeholder="Carboidrato (g)" type="number" inputmode="decimal"><input id="fg" placeholder="Gordura (g)" type="number" inputmode="decimal"></div>
+<div class="row"><input id="ffiber" placeholder="Fibra (g)" type="number" inputmode="decimal"><input id="fgrams" placeholder="Peso (g)" type="number" inputmode="decimal"></div>
+<div class="row"><button data-a="food">Adicionar alimento manual</button></div></details></section>
+<section class="card"><h2>Movimento e exercícios</h2>${d.ex.map((x,i)=>`<div class="it"><span>${esc(x.n)} <small>${x.m} min</small></span><button class="x" data-a="del" data-l="ex" data-i="${i}" aria-label="Remover">×</button></div>`).join('')||'<p class="mut">Nenhum treino neste dia.</p>'}
+<div class="row"><input id="en" placeholder="Atividade, ex.: musculação"><input id="em" placeholder="Minutos" type="number" inputmode="numeric" style="max-width:110px"><button data-a="ex">Adicionar</button></div></section>
+<section class="card"><h2>Remédios de hoje</h2>${S.meds.map((m,i)=>`<div class="it"><label><input type="checkbox" data-a="med" data-i="${i}" ${d.meds[m]?'checked':''}>${esc(m)}</label><button class="x" data-a="medel" data-i="${i}" aria-label="Remover">×</button></div>`).join('')||'<p class="mut">Nenhum remédio cadastrado ainda.</p>'}
+<div class="row"><input id="mn" placeholder="Nome e dose, ex.: Vitamina D 2000 UI"><button data-a="medadd">Cadastrar</button></div></section><section class="card"><h2>Sintomas e bem-estar</h2><p class="hint">Marque o que sentiu hoje. Isso ajuda a acompanhar padrões ao longo do tempo.</p><div class="symptoms">${[['nausea','Enjoo'],['thirst','Muita sede'],['constipation','Intestino preso'],['diarrhea','Diarreia'],['cold','Sensação de frio'],['fatigue','Cansaço'],['headache','Dor de cabeça'],['reflux','Refluxo'],['pain','Dor abdominal']].map(([k,n])=>`<label><input type="checkbox" data-a="symptom" data-k="${k}" ${d.symptoms&&d.symptoms[k]?'checked':''}>${n}</label>`).join('')}</div><label class="f">Observações do dia<textarea id="notes" rows="3" placeholder="Fome, disposição, sono, efeitos percebidos...">${esc(d.notes||'')}</textarea></label><div class="row"><button data-a="notes">Salvar observações</button></div><p class="hint">Se houver dor abdominal intensa ou persistente, vômitos repetidos ou sinais de desidratação, procure orientação médica.</p></section>`;
+}
+function chart(){
+  const w=S.weights.slice(-30);if(w.length<2)return'';
+  const v=w.map(x=>x.kg),mn=Math.min(...v)-.5,mx=Math.max(...v)+.5,X=i=>12+i*(296/(w.length-1)),Y=k=>10+(mx-k)/(mx-mn)*90;
+  return `<svg viewBox="0 0 320 120" role="img" aria-label="Gráfico de peso"><polyline fill="none" stroke="var(--pr)" stroke-width="2.5" points="${w.map((x,i)=>X(i)+','+Y(x.kg)).join(' ')}"/>${w.map((x,i)=>`<circle cx="${X(i)}" cy="${Y(x.kg)}" r="3.5" fill="var(--pr)"/>`).join('')}<text x="12" y="116" font-size="10" fill="var(--mut)">${dm(w[0].d)}</text><text x="308" y="116" font-size="10" text-anchor="end" fill="var(--mut)">${dm(w[w.length-1].d)}</text></svg>`;
+}
+const MS=[['ci','Cintura'],['qu','Quadril'],['br','Braço'],['co','Coxa']];
+function vCorpo(){
+  const W=S.weights,a=W[0],b=W[W.length-1];
+  const recent=W.slice(-7),avg=recent.length?recent.reduce((s,x)=>s+x.kg,0)/recent.length:null;
+  const sum=W.length>1?`${f2(a.kg)} → ${f2(b.kg)} kg (${b.kg-a.kg>0?'+':'−'}${f2(Math.abs(b.kg-a.kg))} kg desde ${dm(a.d)})`:'';
+  const ml=MS.map(([k,n])=>{const l=S.meas.filter(m=>m[k]);return l.length>1?`${n}: ${l[0][k]} → ${l[l.length-1][k]} cm`:''}).filter(Boolean).join(' · ');
+  return `<section class="card"><h2>Evolução do peso</h2>${sum?`<p class="mut">${sum}</p>`:''}<div class="stats"><div class="stat"><span>Último registro</span><b>${b?f2(b.kg)+' kg':'—'}</b></div><div class="stat"><span>Média dos últimos ${recent.length} registros</span><b>${avg!==null?f2(avg)+' kg':'—'}</b></div></div>${chart()}
+<div class="row"><input id="wk" placeholder="Peso em kg" type="number" inputmode="decimal" step="any"><button data-a="wt">Registrar em ${dm(cur)}</button></div>
+${W.map((w,i)=>`<div class="it"><span>${dm(w.d)} <b>${f2(w.kg)} kg</b> ${i?`<small>${w.kg-W[i-1].kg>0?'+':'−'}${f2(Math.abs(w.kg-W[i-1].kg))}</small>`:''}</span><button class="x" data-a="del" data-l="weights" data-i="${i}" aria-label="Remover">×</button></div>`).reverse().join('')}</section>
+<section class="card"><h2>Medidas (cm)</h2>${ml?`<p class="mut">${ml}</p>`:''}
+<div class="g4">${MS.map(([k,n])=>`<input id="m_${k}" placeholder="${n}" type="number" inputmode="decimal" step="any">`).join('')}</div>
+<div class="row"><button data-a="ms">Registrar em ${dm(cur)}</button></div>
+${S.meas.length?`<table><tr><th></th>${MS.map(([k,n])=>`<th>${n}</th>`).join('')}<th></th></tr>${S.meas.map((m,i)=>`<tr><td>${dm(m.d)}</td>${MS.map(([k])=>`<td>${m[k]||'–'}</td>`).join('')}<td><button class="x" data-a="del" data-l="meas" data-i="${i}" aria-label="Remover">×</button></td></tr>`).reverse().join('')}</table>`:''}</section>`;
+}
+function vOzivy(){
+  const D=S.doses,n=D.length,last=D.slice().sort((a,b)=>a.d<b.d?-1:1).at(-1);
+  const nx=last?add(last.d,7):cur,dd=Math.round((new Date(nx+'T12:00')-new Date(today()+'T12:00'))/864e5);
+  const when=dd>0?`em ${dd} dia${dd>1?'s':''}`:dd==0?'hoje':`há ${-dd} dia${dd<-1?'s':''}`;
+  const suggested=last?last.mg:'';
+  return `<section class="card ac"><h2>Próxima aplicação</h2><p class="nx">${wd(nx)} ${dm(nx)} <small>${when}</small></p>
+  <p class="mut">Intervalo de referência: 7 dias após a última aplicação registrada. A data é apenas um lembrete.</p>
+  <div class="row"><input id="dc" placeholder="Cliques (se aplicável)" type="number" inputmode="numeric"><input id="dg" placeholder="Dose em mg conforme receita" type="number" inputmode="decimal" step="any" value="${suggested}"></div>
+  <div class="row"><button data-a="dose">Registrar aplicação em ${dm(cur)}</button></div>
+  <p class="hint">Não aumente nem ajuste a dose com base neste painel. Siga a prescrição e confirme a concentração, o dispositivo e os cliques com seu profissional de saúde.</p></section>
+  <section class="card ac"><h2>Histórico de aplicações</h2>${D.map((x,i)=>`<div class="it"><span>Aplicação · ${wd(x.d)} ${dm(x.d)}<br><small>${x.mg} mg${x.c?' · '+x.c+' cliques':''}</small></span><button class="x" data-a="del" data-l="doses" data-i="${i}" aria-label="Remover">×</button></div>`).reverse().join('')||'<p class="mut">Nenhuma aplicação registrada.</p>'}
+  <p class="mut" style="margin-top:10px">Use este espaço para registrar o que foi prescrito e aplicado. O histórico não substitui a orientação médica.</p></section>`;
+}
+function saveStatusText(){
+ try{const t=localStorage.getItem(LS+'-savedAt');if(!t)return 'O salvamento local será atualizado quando você registrar uma alteração.';const d=new Date(t);return 'Último salvamento local: '+d.toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'});}catch(e){return 'O navegador pode bloquear o armazenamento local; exporte backups regularmente.'}
+}
+function render(){
+  if(!S)return;
+  const hdr=`<header><h1>Meu acompanhamento</h1><div class="dn"><button data-a="day" data-v="-1" aria-label="Dia anterior">‹</button><span>${wd(cur)} ${dm(cur)}${cur==today()?' (hoje)':''}</span><button data-a="day" data-v="1" aria-label="Próximo dia">›</button></div></header>`;
+  document.getElementById('app').innerHTML=hdr+(tab=='hoje'?vHoje():tab=='corpo'?vCorpo():vOzivy());
+  document.getElementById('nav').innerHTML=[['hoje','Hoje'],['corpo','Progresso'],['ozivy','Ozivy']].map(([t,n])=>`<button data-a="tab" data-v="${t}" class="${tab==t?'on':''}">${n}</button>`).join('');
+  document.getElementById('app').insertAdjacentHTML('beforeend',`<section class="card"><h2>Seus dados</h2><p class="hint">Faça uma cópia de segurança para não depender apenas dos dados salvos neste navegador.</p><div class="actions"><button class="g" data-a="export">Exportar backup</button><button class="g" data-a="import">Importar backup</button><button class="g" data-a="theme">Alternar tema</button></div><input id="backupfile" type="file" accept="application/json,.json" style="display:none"><p class="save-status">${esc(saveStatusText())}</p><p class="hint">Os dados ficam neste navegador, a menos que o ambiente de hospedagem ofereça sincronização. Exporte regularmente e teste a restauração periodicamente.</p></section>`);
+}
+const A={
+  tab:b=>{tab=b.dataset.v;if(tab!=='hoje'){stopBarcodeScanner();barcodeScannerOpen=false;}},
+  day:b=>{cur=add(cur,+b.dataset.v)},
+  w:b=>{const d=day(cur);d.water=Math.max(0,d.water+(+b.dataset.v))},
+  food:()=>{const n=val('fn');if(!n&&!num(val('fk')))return;day(cur).food.push({n:n||'Alimento',meal:document.getElementById('manualMeal')?.value||'outro',k:num(val('fk')),p:num(val('fp')),c:num(val('fc')),g:num(val('fg')),fiber:num(document.getElementById('ffiber')?.value),grams:num(document.getElementById('fgrams')?.value)})},
+  favfood:b=>{const f=day(cur).food[+b.dataset.i];if(!f)return;S.favorites=Array.isArray(S.favorites)?S.favorites:[];if(S.favorites.some(x=>x.n===f.n)){alert('Esse alimento já está nos favoritos.');return}const copy=JSON.parse(JSON.stringify(f));delete copy.meal;S.favorites.push(copy)},
+  addfavorite:b=>{const f=(S.favorites||[])[+b.dataset.i];if(!f)return;const copy=JSON.parse(JSON.stringify(f));copy.meal=b.dataset.v||'cafe';day(cur).food.push(copy)},
+  unfavorite:b=>{if(!Array.isArray(S.favorites))return;S.favorites.splice(+b.dataset.i,1)},
+  repeatmeal:b=>{const mk=b.dataset.v,prev=S.days[add(cur,-1)],items=(prev?.food||[]).filter(f=>(f.meal||'outro')===mk);if(!items.length){alert('Não há alimentos registrados nessa refeição no dia anterior.');return}const d=day(cur);d.food.push(...items.map(f=>JSON.parse(JSON.stringify(f))));},
+  ex:()=>{const n=val('en');if(!n)return;day(cur).ex.push({n,m:num(val('em'))})},
+  med:b=>{const d=day(cur),m=S.meds[+b.dataset.i];d.meds[m]=!d.meds[m]},
+  medel:b=>{S.meds.splice(+b.dataset.i,1)},
+  medadd:()=>{const n=val('mn');if(n&&!S.meds.includes(n))S.meds.push(n)},
+  del:b=>{const l=b.dataset.l,i=+b.dataset.i;(l=='food'||l=='ex'?day(cur)[l]:S[l]).splice(i,1)},
+  wt:()=>{const kg=num(val('wk'));if(!kg)return;S.weights=S.weights.filter(w=>w.d!=cur);S.weights.push({d:cur,kg});S.weights.sort((a,b)=>a.d<b.d?-1:1)},
+  ms:()=>{const m={d:cur};let any=0;MS.forEach(([k])=>{const v=num(val('m_'+k));if(v){m[k]=v;any=1}});if(!any)return;S.meas=S.meas.filter(x=>x.d!=cur);S.meas.push(m);S.meas.sort((a,b)=>a.d<b.d?-1:1)},
+  dose:()=>{const mg=num(val('dg'));if(!mg){alert('Informe a dose em mg conforme a sua prescrição.');return}S.doses=S.doses.filter(x=>x.d!=cur);S.doses.push({d:cur,c:num(val('dc')),mg});S.doses.sort((a,b)=>a.d<b.d?-1:1)},
+  symptom:b=>{const d=day(cur);d.symptoms=d.symptoms||{};d.symptoms[b.dataset.k]=b.checked},
+  notes:()=>{day(cur).notes=val('notes')},
+  export:()=>{const blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='backup-acompanhamento-'+today()+'.json';a.click();URL.revokeObjectURL(url)},
+  import:()=>document.getElementById('backupfile').click(),
+  theme:()=>{const r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':r.dataset.theme==='light'?'dark':'dark'},
+  openTaco:b=>{const m=b.dataset.v;if(tacoMealActive===m){tacoMealActive='';selectedTaco=null;tacoSearchQuery='';barcodeProduct=null;barcodeStatus='';stopBarcodeScanner()}else{tacoMealActive=m;selectedTaco=null;tacoSearchQuery='';barcodeMeal=m;barcodeProduct=null;barcodeStatus='';if(tacoStatus==='idle')loadTaco()}},
+  stopscanner:()=>{stopBarcodeScanner();barcodeStatus='Câmera fechada.'},
+  lookupbarcode:()=>{barcodeMeal=tacoMealActive||'cafe';lookupBarcode(document.getElementById('barcodeInput')?.value||'')},
+  addbarcode:()=>{if(!barcodeProduct)return;const grams=num(document.getElementById('barcodeGrams')?.value);if(grams<=0){alert('Informe uma quantidade maior que zero.');return}const p=barcodeProduct,scale=grams/100;day(cur).food.push({n:p.name+(p.brand?' — '+p.brand:''),meal:tacoMealActive||barcodeMeal||'cafe',grams,k:p.kcal===null?null:p.kcal*scale,p:p.p===null?null:p.p*scale,c:p.c===null?null:p.c*scale,g:p.fat===null?null:p.fat*scale,fiber:p.fiber===null?null:p.fiber*scale,barcode:p.code,source:'Open Food Facts'});barcodeProduct=null;barcodeStatus='';stopBarcodeScanner();tacoMealActive='';selectedTaco=null;tacoSearchQuery='';},
+  selecttaco:b=>{selectedTaco=+b.dataset.i},
+  retrytaco:()=>{tacoStatus='idle';loadTaco()},
+  addtaco:()=>{if(selectedTaco===null)return;const f=tacoFoods[selectedTaco],grams=num(val('tacoGrams'));if(grams<=0){alert('Informe uma quantidade em gramas maior que zero.');return}
+   const get=k=>{const v=per100(f,k,grams);return v===null?0:v};
+   day(cur).food.push({n:f.descricao,k:get('energia_kcal'),p:get('proteina_g'),c:get('carboidrato_g'),g:get('lipideos_g'),fiber:per100(f,'fibra_g',grams),grams,meal:tacoMealActive||'cafe',taco:true,nutrients:Object.fromEntries(TACO_FIELDS.map(([k])=>[k,per100(f,k,grams)]))});
+   tab='hoje';selectedTaco=null;tacoMealActive='';tacoSearchQuery='';
+  }
+};
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]');if(!b||!S)return;
+  const action=b.dataset.a;
+  if(action==='symptom')return;
+  if(action==='startscanner'){barcodeMeal=tacoMealActive||'cafe';barcodeScannerOpen=true;barcodeStatus='Preparando câmera...';render();startBarcodeScanner();return;}
+  if(action==='import') { document.getElementById('backupfile').click(); return; }
+  if(action==='export'||action==='theme'){A[action](b);if(action==='theme')render();return;}
+  A[action](b);save();render();
+});
+document.addEventListener('input',e=>{
+ if(e.target.id==='tacoSearch'){
+   tacoSearchQuery=e.target.value;
+   const start=e.target.selectionStart;
+   const app=document.getElementById('app');
+   app.innerHTML=app.querySelector('header').outerHTML+vHoje();
+   document.getElementById('nav').innerHTML=[['hoje','Hoje'],['corpo','Progresso'],['ozivy','Ozivy']].map(([t,n])=>`<button data-a="tab" data-v="${t}" class="${tab==t?'on':''}">${n}</button>`).join('');
+   app.insertAdjacentHTML('beforeend',`<section class="card"><h2>Seus dados</h2><p class="hint">Faça uma cópia de segurança para não depender apenas dos dados salvos neste navegador.</p><div class="actions"><button class="g" data-a="export">Exportar backup</button><button class="g" data-a="import">Importar backup</button><button class="g" data-a="theme">Alternar tema</button></div><input id="backupfile" type="file" accept="application/json,.json" style="display:none"><p class="save-status">${esc(saveStatusText())}</p><p class="hint">Os dados ficam neste navegador, a menos que o ambiente de hospedagem ofereça sincronização. Exporte regularmente e teste a restauração periodicamente.</p></section>`);
+   const input=document.getElementById('tacoSearch');
+   if(input){input.focus();try{input.setSelectionRange(start,start)}catch(err){}}
+ }
+ if(e.target.id==='tacoGrams'&&selectedTaco!==null){const f=tacoFoods[selectedTaco],g=Math.max(0,num(e.target.value));TACO_FIELDS.forEach(([k])=>{const el=document.querySelector('[data-taco-value="'+k+'"]');if(el)el.textContent=tacoFmt(per100(f,k,g));});document.querySelectorAll('.nutri-grams').forEach(el=>el.textContent='para '+tacoFmt(g)+' g');}
+});
+document.addEventListener('change',e=>{
+  if(e.target.id==='tacoCategory'){render();return;}
+  if(e.target.matches('input[data-a="symptom"]')){A.symptom(e.target);save();return;}
+  if(e.target.id==='backupfile'&&e.target.files&&e.target.files[0]){const file=e.target.files[0],reader=new FileReader();reader.onload=()=>{try{const imported=JSON.parse(reader.result);if(!imported||!Array.isArray(imported.weights)||!Array.isArray(imported.doses)||!imported.days)throw new Error('invalid');if(confirm('Importar este backup substituirá os dados atuais. Antes, será criada uma cópia de segurança dos dados atuais neste navegador. Deseja continuar?')){try{localStorage.setItem(LS+'-before-import',JSON.stringify(S))}catch(e){}S=imported;S.favorites=Array.isArray(S.favorites)?S.favorites:[];S.goals=Object.assign({water:2500,kcal:0,prot:100,carb:0,fat:0,fiber:25},S.goals||{});S.meas=Array.isArray(S.meas)?S.meas:[];S.weights=Array.isArray(S.weights)?S.weights:[];S.doses=Array.isArray(S.doses)?S.doses:[];S.meds=Array.isArray(S.meds)?S.meds:[];S.days=S.days||{};Object.keys(S.days).forEach(k=>{const d=S.days[k];d.food=Array.isArray(d.food)?d.food:[];d.ex=Array.isArray(d.ex)?d.ex:[];d.meds=d.meds||{};d.symptoms=d.symptoms||{};d.notes=d.notes||'';d.water=Number(d.water)||0});save();render();alert('Backup importado. Uma cópia anterior foi preservada no armazenamento local, se disponível.')}}catch(err){alert('Não foi possível importar: arquivo inválido.')} };reader.readAsText(file);e.target.value='';}
+});
+document.addEventListener('change',e=>{
+  const k=e.target.dataset&&e.target.dataset.goal;if(!k)return;
+  S.goals[k]=num(e.target.value);if(k=='water'&&!S.goals.water)S.goals.water=2500;save();render();
+});
+(async()=>{
+  cur=today();
+  S=(await load())||seed();
+  S.goals=Object.assign({water:2500,kcal:0,prot:100,carb:0,fat:0,fiber:25},S.goals);
+  S.favorites=Array.isArray(S.favorites)?S.favorites:[];
+  Object.keys(S.days||{}).forEach(k=>{S.days[k].symptoms=S.days[k].symptoms||{};S.days[k].notes=S.days[k].notes||'';S.days[k].food=S.days[k].food||[];S.days[k].ex=S.days[k].ex||[];S.days[k].meds=S.days[k].meds||{};S.days[k].water=S.days[k].water||0;});
+  render();
+})();
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+ window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('Não foi possível ativar o modo instalável/offline.',err)));
+}
+</script>
+</body>
+</html>
